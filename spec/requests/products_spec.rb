@@ -16,13 +16,13 @@ RSpec.describe "/products", type: :request do
   
   # Product. As you add validations to Product, be sure to
   # adjust the attributes here as well.
-  let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
-  }
+  let(:valid_attributes) do
+    { name: 'Super Cool Hockey Stick',
+      description: 'This cool hockey stick will help you score lots of goals.',
+      price: 229.99 }
+  end
 
-  let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
-  }
+  let(:invalid_attributes) { { name: nil, description: nil, price: nil } }
 
   describe "GET /index" do
     it "renders a successful response" do
@@ -48,7 +48,7 @@ RSpec.describe "/products", type: :request do
   end
 
   describe "GET /edit" do
-    it "render a successful response" do
+    it "renders a successful response" do
       product = Product.create! valid_attributes
       get edit_product_url(product)
       expect(response).to be_successful
@@ -76,24 +76,28 @@ RSpec.describe "/products", type: :request do
         }.to change(Product, :count).by(0)
       end
 
-      it "renders a successful response (i.e. to display the 'new' template)" do
+      it "has http_status :unprocessable_entity" do
         post products_url, params: { product: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
 
   describe "PATCH /update" do
     context "with valid parameters" do
-      let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
-      }
+      let(:new_attributes) do
+        { name: 'Different Product Name',
+          description: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, impedit!',
+          price: 29.99 }
+      end
 
       it "updates the requested product" do
         product = Product.create! valid_attributes
         patch product_url(product), params: { product: new_attributes }
         product.reload
-        skip("Add assertions for updated state")
+        expect(product.name).to eq('Different Product Name')
+        expect(product.description).to eq('Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quasi, impedit!')
+        expect(product.price).to eq(29.99)
       end
 
       it "redirects to the product" do
@@ -105,10 +109,10 @@ RSpec.describe "/products", type: :request do
     end
 
     context "with invalid parameters" do
-      it "renders a successful response (i.e. to display the 'edit' template)" do
+      it "has http_status :unprocessable_entity" do
         product = Product.create! valid_attributes
         patch product_url(product), params: { product: invalid_attributes }
-        expect(response).to be_successful
+        expect(response).to have_http_status(:unprocessable_entity)
       end
     end
   end
