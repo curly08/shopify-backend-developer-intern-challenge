@@ -61,4 +61,30 @@ RSpec.describe Product, type: :model do
       expect(product.valid?).to be true
     end
   end
+
+  context 'to_csv is called' do
+    before do
+      Product.create(name: 'Super Cool Hockey Stick',
+                     description: 'This cool hockey stick will help you score lots of goals.',
+                     price: 229.99)
+      Product.create(name: 'Super Cool Baseball Bat',
+                     description: 'This cool baseball bat will help you score lots of homeruns.',
+                     price: 199.99)
+    end
+
+    it 'contains column_names as headers' do
+      headers = Product.column_names.join(',')
+      expect(Product.all.to_csv).to include(headers)
+    end
+
+    it 'contains first product info' do
+      product_values = Product.first.attributes.values.map(&:to_s).join(',')
+      expect(Product.all.to_csv).to include(*product_values)
+    end
+
+    it 'contains second product info' do
+      product_values = Product.last.attributes.values.map(&:to_s).join(',')
+      expect(Product.all.to_csv).to include(*product_values)
+    end
+  end
 end
