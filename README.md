@@ -1,6 +1,6 @@
 # Shopify Backend Developer Intern Challenge - Summer 2022
 
-This is an inventory tracking web application that could be used by a logistics company. It includes basic CRUD functionality: you can create inventory items, edit them, delete them, and view a list of them. You can also export the inventory data to a CSV file by the push of a button.
+This is an inventory tracking web application that could be used by a logistics company, built with Ruby on Rails and tested with RSpec. It includes basic CRUD functionality: you can create inventory items, edit them, delete them, and view a list of them. You can also export the inventory data to a CSV file by the push of a button.
 
 Visit the live application [here](https://immense-fjord-98970.herokuapp.com/) or install the application locally by following the steps below.
 
