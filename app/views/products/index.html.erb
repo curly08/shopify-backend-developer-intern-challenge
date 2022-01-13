@@ -4,11 +4,14 @@
 
 <div id="products">
   <% @products.each do |product| %>
-    <%= render product %>
-    <p>
-      <%= link_to "Show this product", product %>
-    </p>
+    <section class="product">
+      <%= render product %>
+      <p>
+        <%= link_to "Show this product", product %>
+      </p>
+    </section>
   <% end %>
 </div>
 
-<%= link_to "New product", new_product_path %>
+<%= link_to "New product", new_product_path %><br><br>
+<%= button_to "Export inventory data as a CSV file", products_path(format: :csv), method: :get %>
